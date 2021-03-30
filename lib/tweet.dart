@@ -1,6 +1,8 @@
 
-
+import 'dart:convert';
 import 'package:twitter_furia_bot/infos.dart';
+import 'package:twitter_api/twitter_api.dart';
+
 
 class Tweet{
  //TODO
@@ -18,10 +20,30 @@ String _tweetText;
 
  }
 
- void tweetTextBuild(){
-  _tweetText = ("@arTcsgo, pra cima deles cachorrão!\n@kscerato hj tem heim!\n"
-  "@yuurih boa sorte irmão, mostra pra eles quem é o camisa 10!\n@FURIA_VINI *beijinho do Guerri*\n"
-  "@HEN1 morde eles Jacaré!\n@guerri Boa Sorte Paizão!\n\n@furia boa sorte contra a $_opponent, AMASSA ELES!");
-  print(_tweetText);
+ void tweetBuild(Map twitterKeys) async {
+  final String _tweetText = '@arTcsgo, @kscerato, @yuurih, @FURIA_VINI, @h0ndaog '
+  '@1juniorcs e @guerri, e dia de furia fml, sem escandalo, @furia boa sorte contra a $_opponent, AMASSA ELES!';
+
+
+  final _twitterOauth = new twitterApi(
+  consumerKey: twitterKeys['apiKey'],
+  consumerSecret: twitterKeys['apiKeySecret'],
+  token: twitterKeys['accessToken'],
+  tokenSecret: twitterKeys['acessTokenSecret']
+  );
+
+  Future tweetRequest = _twitterOauth.getTwitterRequest(
+    'POST',
+    'statuses/update.json',
+    options: {
+        'status' : _tweetText
+    }
+  );
+
+    var response = await tweetRequest;
+    print("status code:" + response.statusCode);
+
  }
+
+ DateTime getTweetHour() => _tweetHour;
 }

@@ -10,5 +10,8 @@ build/
 # Directory created by dartdoc
 doc/api/
 
+#ide configuration folder
+.vscode/
+
 # .json with project tokens and keys
 lib/tokens.json
